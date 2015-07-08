@@ -1,11 +1,8 @@
-
 'use strict';
-
 var React = require('react');
 var Header = require('./header.jsx');
 
 module.exports = React.createClass({
-
   render: function render() {
     var bundle;
 

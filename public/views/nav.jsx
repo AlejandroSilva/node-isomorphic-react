@@ -1,6 +1,4 @@
-
 'use strict';
-
 var React = require('react');
 var Link = require('react-router').Link;
 
@@ -27,7 +25,7 @@ module.exports = React.createClass({
             <li className='left-nav-link' id='nav-section3'>
               <Link to='section3' className={this.props.navSelection==='nav-section3'?activeClass:''} 
                     activeClassName={activeClass}>Section 3</Link>
-            </li>       
+            </li>
           </ul>
         </nav>
       </section>

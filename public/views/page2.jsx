@@ -1,4 +1,3 @@
-
 'use strict';
 
 var Layout = require('./layout.jsx');

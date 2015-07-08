@@ -1,4 +1,24 @@
 {
+    "express": {
+//        "view cache": false,
+        "view engine": "jsx",
+        "view": "require:react-engine/lib/expressView",
+        "views": "path:./public/views"
+    },
+
+    "view engines": {
+        "jsx": {
+            "module": "react-engine/lib/server",
+            "renderer": {
+                "method": "create",
+                "arguments": [{
+                    "reactRoutes": "path:./public/routes.jsx"
+//                    "performanceCollector": "require:<PATH_TO_PERF_COLLECTOR_FUNCTION>"
+                }]
+            }
+        }
+    },
+
     "middleware": {
         "static": {
             "module": {

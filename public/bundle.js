@@ -22859,7 +22859,7 @@ var Client = require('react-engine/lib/client');
 // Include all view files. Browerify doesn't do
 // this automatically as it can only operate on
 // static require statements.
-require('./views/404.jsx');require('./views/header.jsx');require('./views/home.jsx');require('./views/layout.jsx');require('./views/nav.jsx');require('./views/page2.jsx');require('./views/section1.jsx');require('./views/section2.jsx');require('./views/section3.jsx');require('./views/spa.jsx');
+require('./views/errors/notFound.jsx');require('./views/header.jsx');require('./views/home.jsx');require('./views/layout.jsx');require('./views/nav.jsx');require('./views/page2.jsx');require('./views/section1.jsx');require('./views/section2.jsx');require('./views/section3.jsx');require('./views/spa.jsx');
 
 // boot options
 var options = {
@@ -22877,7 +22877,7 @@ document.addEventListener('DOMContentLoaded', function onLoad() {
   Client.boot(options);
 });
 
-},{"./routes.jsx":199,"./views/404.jsx":200,"./views/header.jsx":201,"./views/home.jsx":202,"./views/layout.jsx":203,"./views/nav.jsx":204,"./views/page2.jsx":205,"./views/section1.jsx":206,"./views/section2.jsx":207,"./views/section3.jsx":208,"./views/spa.jsx":209,"react-engine/lib/client":2}],199:[function(require,module,exports){
+},{"./routes.jsx":199,"./views/errors/notFound.jsx":200,"./views/header.jsx":201,"./views/home.jsx":202,"./views/layout.jsx":203,"./views/nav.jsx":204,"./views/page2.jsx":205,"./views/section1.jsx":206,"./views/section2.jsx":207,"./views/section3.jsx":208,"./views/spa.jsx":209,"react-engine/lib/client":2}],199:[function(require,module,exports){
 
 'use strict';
 
@@ -22889,24 +22889,37 @@ var SPA = require('./views/spa.jsx');
 var Section1 = require('./views/section1.jsx');
 var Section2 = require('./views/section2.jsx');
 var Section3 = require('./views/section3.jsx');
+var NotFound = require('./views/errors/notFound.jsx');
+var NotFound2 = React.createClass({displayName: "NotFound2",
+    render: function render() {
+        return (
+            React.createElement("section", {className: "spa-section"}, 
+                React.createElement("h3", null, "URL: ", this.props.params, "- Not Found(404)"), 
+                React.createElement("h6", null, "I am a Plain vanilla react view 2")
+            )
+        );
+    }
+});
 
 var routes = module.exports = (
-  React.createElement(Route, {path: "/spa", handler: SPA}, 
-    React.createElement(Route, {name: "section1", handler: Section1}), 
-    React.createElement(Route, {name: "section2", handler: Section2}), 
-    React.createElement(Route, {name: "section3", handler: Section3}), 
-	React.createElement(Router.DefaultRoute, {handler: Section1})
-  )
+    React.createElement(Route, {path: "/spa", handler: SPA}, 
+        React.createElement(Route, {name: "section1", handler: Section1}), 
+        React.createElement(Route, {name: "section2", handler: Section2}), 
+        React.createElement(Route, {name: "section3", handler: Section3}), 
+
+        React.createElement(Router.DefaultRoute, {handler: NotFound2}), 
+        React.createElement(Router.NotFoundRoute, {handler: NotFound2})
+    )
+// ToDo: show a 404 inside a the "spa" route, example: '/spa/section999'
 );
 
-},{"./views/section1.jsx":206,"./views/section2.jsx":207,"./views/section3.jsx":208,"./views/spa.jsx":209,"react":197,"react-router":28}],200:[function(require,module,exports){
+},{"./views/errors/notFound.jsx":200,"./views/section1.jsx":206,"./views/section2.jsx":207,"./views/section3.jsx":208,"./views/spa.jsx":209,"react":197,"react-router":28}],200:[function(require,module,exports){
 'use strict';
 
-var Layout = require('./layout.jsx');
+var Layout = require('../layout.jsx');
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
-
     render: function render() {
         return (
             React.createElement(Layout, React.__spread({},  this.props), 
@@ -22917,7 +22930,7 @@ module.exports = React.createClass({displayName: "exports",
     }
 });
 
-},{"./layout.jsx":203,"react":197}],201:[function(require,module,exports){
+},{"../layout.jsx":203,"react":197}],201:[function(require,module,exports){
 
 'use strict';
 
@@ -22953,16 +22966,12 @@ module.exports = React.createClass({
 });
 
 },{"react":197}],202:[function(require,module,exports){
-
 'use strict';
-
 var Layout = require('./layout.jsx');
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
-
   render: function render() {
-
     return (
       React.createElement(Layout, React.__spread({},  this.props), 
         React.createElement("h2", null, "Home"), 
@@ -22973,14 +22982,11 @@ module.exports = React.createClass({displayName: "exports",
 });
 
 },{"./layout.jsx":203,"react":197}],203:[function(require,module,exports){
-
 'use strict';
-
 var React = require('react');
 var Header = require('./header.jsx');
 
 module.exports = React.createClass({displayName: "exports",
-
   render: function render() {
     var bundle;
 
@@ -23009,9 +23015,7 @@ module.exports = React.createClass({displayName: "exports",
 });
 
 },{"./header.jsx":201,"react":197}],204:[function(require,module,exports){
-
 'use strict';
-
 var React = require('react');
 var Link = require('react-router').Link;
 
@@ -23067,15 +23071,11 @@ module.exports = React.createClass({displayName: "exports",
 });
 
 },{"./layout.jsx":203,"react":197}],206:[function(require,module,exports){
-
 'use strict';
-
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
-
   render: function render() {
-
     return (
     	React.createElement("section", {className: "spa-section"}, 
         	React.createElement("h2", null, "Section 1"), 
@@ -23124,7 +23124,6 @@ module.exports = React.createClass({displayName: "exports",
 });
 
 },{"react":197}],209:[function(require,module,exports){
-
 'use strict';
 
 var Layout = require('./layout.jsx');
