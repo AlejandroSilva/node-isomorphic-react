@@ -7,22 +7,27 @@
   "scripts": {
     "start": "npm run browserify && node index.js",
     "browserify": "browserify -t reactify -t require-globify public/index.js -o public/bundle.js",
+    "webpack": "webpack -t reactify -t require-globify public/index.js -o public/bundle.js -w",
     "test": "grunt test"
   },
   "dependencies": {
     "browserify": "^10.2.4",
     "engine-munger": "^0.2.0",
     "express": "^4.3.0",
+    "json-loader": "^0.5.2",
+    "jsx-loader": "^0.13.2",
     "kraken-devtools": "^1.0.0",
     "kraken-js": "^1.0.1",
     "localizr": "^0.1.6",
     "node-jsx": "^0.13.3",
+    "node-libs-browser": "^0.5.2",
     "react": "^0.13.3",
     "react-engine": "^1.7.0",
     "react-router": "^0.13.3",
     "reactify": "^1.1.1",
     "require-globify": "^1.2.1",
-    "stylus": "^0.42.3"
+    "stylus": "^0.51.1",
+    "webpack": "^1.10.1"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
