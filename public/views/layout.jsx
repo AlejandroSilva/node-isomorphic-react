@@ -17,6 +17,7 @@ module.exports = React.createClass({
             {this.props.title}
           </title>
           <link rel="stylesheet" href="/css/styles.css"/>
+          <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         </head>
         <body>
           <Header {...this.props}></Header>
@@ -29,3 +30,6 @@ module.exports = React.createClass({
     );
   }
 });
+
+// Example code from:
+//http://reactfordesigners.com/labs/reactjs-introduction-for-people-who-know-just-enough-jquery-to-get-by/?utm_content=buffer83a12&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer

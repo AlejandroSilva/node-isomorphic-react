@@ -23669,7 +23669,8 @@
 	          React.createElement("title", null, 
 	            this.props.title
 	          ), 
-	          React.createElement("link", {rel: "stylesheet", href: "/css/styles.css"})
+	          React.createElement("link", {rel: "stylesheet", href: "/css/styles.css"}), 
+	          React.createElement("link", {href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css", rel: "stylesheet", type: "text/css"})
 	        ), 
 	        React.createElement("body", null, 
 	          React.createElement(Header, React.__spread({},  this.props)), 
@@ -23683,6 +23684,8 @@
 	  }
 	});
 
+	// Example code from:
+	//http://reactfordesigners.com/labs/reactjs-introduction-for-people-who-know-just-enough-jquery-to-get-by/?utm_content=buffer83a12&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer
 
 /***/ },
 /* 201 */
@@ -23790,14 +23793,61 @@
 	var React = __webpack_require__(4);
 
 	module.exports = React.createClass({displayName: "module.exports",
-	  render: function render() {
-	    return (
-	    	React.createElement("section", {className: "spa-section"}, 
-	        	React.createElement("h2", null, "Section 3"), 
-	        	React.createElement("p", null, "This is the third section loaded using react router on the client. It is implemented as a ReactJS component.")
-	        )
-	    );
-	  }
+	    getInitialState: function () {
+	        return {
+	            text: 'escribe algo897777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777',
+	            photoAdded: false
+	        }
+	    },
+
+	    handleChange: function(event){
+	        //console.log(event.target.value);
+	        this.setState({
+	            text: event.target.value
+	        });
+	    },
+
+	    handlePhoto: function () {
+	        this.setState({
+	            addedPhoto: !this.state.addedPhoto
+	        })
+	    },
+
+	    remainingCharacters: function () {
+	        return 140-this.state.text.length-(this.state.addedPhoto? 23: 0);
+	    },
+
+	    overflowAlert : function () {
+	        if(this.remainingCharacters()<0){
+	            return (
+	                React.createElement("h3", null, "Oops, Too Long... ", this.state.text.substring(this.state.addedPhoto?117:140, this.length))
+	            );
+	        }else{
+	            return;
+	        }
+	    },
+
+	    render: function render() {
+	        return (
+	            React.createElement("section", {className: "spa-section"}, 
+	                React.createElement("div", {className: "well clearfix"}, 
+	                    React.createElement("h1", null, "Section 3"), 
+	                    this.overflowAlert(), 
+	                    React.createElement("textarea", {className: "form-control", onChange: this.handleChange}, 
+	                        this.state.text
+	                    ), 
+	                    React.createElement("br", null), 
+	                    React.createElement("button", {className: "btn btn-primary pull-right", disabled: (this.state.text.length===0 && !this.state.addedPhoto) || this.remainingCharacters()<0}, 
+	                        "Tweet"
+	                    ), 
+	                    React.createElement("button", {className: "btn btn-default pull-right", onClick: this.handlePhoto}, 
+	                        this.state.addedPhoto? "Remove photo": "Add phoro"
+	                    ), 
+	                    React.createElement("span", null,  this.remainingCharacters() )
+	                )
+	            )
+	        );
+	    }
 	});
 
 
