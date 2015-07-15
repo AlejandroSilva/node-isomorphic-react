@@ -28,6 +28,13 @@ module.exports = function (router) {
         });
     });
 
+    router.get('/api/users/', function(req, res){
+       res.json([
+           {"author": "Pete Hunt", "text": "This is one comment"},
+           {"author": "Jordan Walke", "text": "This is *another* comment"}
+        ]);
+    });
+
     router.get('/spa*', function(req, res) {
         res.render(req.url, {
             title: 'SPA - React Engine Demo',

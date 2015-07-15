@@ -56,7 +56,7 @@
 	'use strict';
 
 	var Routes = __webpack_require__(2);
-	var Client = __webpack_require__(205);
+	var Client = __webpack_require__(209);
 
 	// Include all view files. Browerify doesn't do
 	// this automatically as it can only operate on
@@ -70,7 +70,7 @@
 	  // supply a function that can be called
 	  // to resolve the file that was rendered.
 	  viewResolver: function(viewName) {
-	    return __webpack_require__(207)("./" + viewName);
+	    return __webpack_require__(211)("./" + viewName);
 	  }
 	};
 
@@ -92,7 +92,7 @@
 	var SPA = __webpack_require__(199);
 	var Section1 = __webpack_require__(3);
 	var Section2 = __webpack_require__(203);
-	var Section3 = __webpack_require__(204);
+	var Section3 = __webpack_require__(208);
 	//var NotFound = require('./views/errors/notFound.jsx');
 	var NotFound2 = React.createClass({displayName: "NotFound2",
 	    render: function render() {
@@ -23670,7 +23670,8 @@
 	            this.props.title
 	          ), 
 	          React.createElement("link", {rel: "stylesheet", href: "/css/styles.css"}), 
-	          React.createElement("link", {href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css", rel: "stylesheet", type: "text/css"})
+	          React.createElement("link", {href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css", rel: "stylesheet", type: "text/css"}), 
+	          React.createElement("script", {src: "//cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"})
 	        ), 
 	        React.createElement("body", null, 
 	          React.createElement(Header, React.__spread({},  this.props)), 
@@ -23771,21 +23772,178 @@
 	/** @jsx React.DOM */'use strict';
 
 	var React = __webpack_require__(4);
+	var CommentBox = __webpack_require__(204);
 
 	module.exports = React.createClass({displayName: "module.exports",
 	  render: function render() {
-	    return (
-	    	React.createElement("section", {className: "spa-section"}, 
-	        	React.createElement("h2", null, "Section 2"), 
-	        	React.createElement("p", null, "This is the second section loaded using react router on the client. It is implemented as a ReactJS component.")
-	        )
-	    );
+	      var data = [
+	          {author: "Pete Hunt", text: "This is one comment"},
+	          {author: "Jordan Walke", text: "This is *another one* comment"}
+	      ];
+	      return (
+	          React.createElement("section", {className: "spa-section"}, 
+	              React.createElement("h2", null, "Section 2"), 
+	              React.createElement("p", null, "This is the second section loaded using react router on the client. It is implemented as a ReactJS component."), 
+	              React.createElement(CommentBox, {data: data})
+	          )
+	      );
 	  }
+	});
+
+	// Tutorial from:
+	// http://facebook.github.io/react/docs/tutorial.html
+
+	//
+
+/***/ },
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */'use strict';
+
+	var React = __webpack_require__(4);
+	var CommentForm = __webpack_require__(205);
+	var CommentList = __webpack_require__(206);
+
+	var CommentBox = module.exports = React.createClass({displayName: "module.exports",
+	    getInitialState: function () {
+	        return {
+	            data: []
+	        }
+	    },
+
+	    //componentDidMount is a method called automatically by React when a component is rendered.
+	    componentDidMount: function () {
+	      $.ajax({
+	          url: '/api/users',
+	          dataType: 'json',
+	          cache: false,
+	          success: function(data){
+	              this.setState({
+	                  data: data
+	              })
+	          }.bind(this),
+	          error: function(xhr, status, err){
+	              console.error(this.props.url, status, err.toString());
+	          }.bind(this)
+	      });
+	    },
+
+	    // called from the CommentForm
+	    handleCommentSubmit: function (comment) {
+	        // ToDo: Submit to the server
+	        this.state.data.push(comment);
+	        console.log('nuevo: ', comment);
+	        this.setState({
+	            data: this.state.data
+	        })
+	    },
+
+	    render: function () {
+	        return (
+	            React.createElement("div", {className: "commentBox"}, 
+	                React.createElement("h1", null, "Comments"), 
+	                React.createElement(CommentList, {data: this.state.data}), 
+	                React.createElement(CommentForm, {onCommentSubmit: this.handleCommentSubmit})
+	            )
+	        )
+	    }
 	});
 
 
 /***/ },
-/* 204 */
+/* 205 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */'use strict';
+
+	var React = __webpack_require__(4);
+
+	var CommentForm = module.exports = React.createClass({displayName: "module.exports",
+	    handleSubmit: function (evt) {
+	        evt.preventDefault();
+
+	        var author = React.findDOMNode(this.refs.author).value.trim();
+	        var text   = React.findDOMNode(this.refs.text).value.trim();
+
+	        if(!text || !author){
+	            return;
+	        };
+
+	        // call the parent
+	        this.props.onCommentSubmit({
+	            author: author,
+	            text: text
+	        });
+
+	        React.findDOMNode(this.refs.author).value = '';
+	        React.findDOMNode(this.refs.text).value = '';
+	        return;
+	    },
+
+	    render: function () {
+	        return (
+	            React.createElement("form", {className: "commentForm", onSubmit: this.handleSubmit}, 
+	                React.createElement("input", {type: "text", placeholder: "your name", ref: "author"}), 
+	                React.createElement("input", {type: "text", placeholder: "Say something...", ref: "text"}), 
+	                React.createElement("input", {type: "submit", value: "Post"})
+	            )
+	        )
+	    }
+	});
+
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */'use strict';
+
+	var React = __webpack_require__(4);
+	var Comment = __webpack_require__(207);
+
+	var CommentList = module.exports = React.createClass({displayName: "module.exports",
+	    render: function () {
+
+	        var commentNodes = this.props.data.map(function (comment) {
+	            return (
+	                React.createElement(Comment, {author: comment.author}, comment.text)
+	            )
+	        });
+
+
+	        return (
+	            React.createElement("div", {className: "commentList"}, 
+	                commentNodes
+	            )
+	        )
+	    }
+	});
+
+/***/ },
+/* 207 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */'use strict';
+
+	var React = __webpack_require__(4);
+
+	module.exports = React.createClass({displayName: "module.exports",
+	    render: function () {
+	        return (
+	            React.createElement("div", {className: "comment"}, 
+	                React.createElement("h2", {className: "commentAuthor"}, 
+	                    this.props.author
+	                ), 
+	                this.props.children
+	            )
+	        )
+	    }
+	});
+
+
+/***/ },
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */'use strict';
@@ -23852,7 +24010,7 @@
 
 
 /***/ },
-/* 205 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*-------------------------------------------------------------------------------------------------------------------*\
@@ -23872,7 +24030,7 @@
 
 	'use strict';
 
-	var Config = __webpack_require__(206);
+	var Config = __webpack_require__(210);
 	var React = __webpack_require__(4);
 	var Router = __webpack_require__(160);
 
@@ -23932,7 +24090,7 @@
 
 
 /***/ },
-/* 206 */
+/* 210 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -23944,28 +24102,36 @@
 	}
 
 /***/ },
-/* 207 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./errors/notFound": 208,
-		"./errors/notFound.jsx": 208,
+		"./errors/notFound": 212,
+		"./errors/notFound.jsx": 212,
 		"./header": 201,
 		"./header.jsx": 201,
-		"./home": 209,
-		"./home.jsx": 209,
+		"./home": 213,
+		"./home.jsx": 213,
 		"./layout": 200,
 		"./layout.jsx": 200,
 		"./nav": 202,
 		"./nav.jsx": 202,
-		"./page2": 210,
-		"./page2.jsx": 210,
+		"./page2": 214,
+		"./page2.jsx": 214,
 		"./section1": 3,
 		"./section1.jsx": 3,
 		"./section2": 203,
 		"./section2.jsx": 203,
-		"./section3": 204,
-		"./section3.jsx": 204,
+		"./section2Components/Comment": 207,
+		"./section2Components/Comment.jsx": 207,
+		"./section2Components/CommentBox": 204,
+		"./section2Components/CommentBox.jsx": 204,
+		"./section2Components/CommentForm": 205,
+		"./section2Components/CommentForm.jsx": 205,
+		"./section2Components/CommentList": 206,
+		"./section2Components/CommentList.jsx": 206,
+		"./section3": 208,
+		"./section3.jsx": 208,
 		"./spa": 199,
 		"./spa.jsx": 199
 	};
@@ -23980,11 +24146,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 207;
+	webpackContext.id = 211;
 
 
 /***/ },
-/* 208 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */'use strict';
@@ -24005,7 +24171,7 @@
 
 
 /***/ },
-/* 209 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */'use strict';
@@ -24025,7 +24191,7 @@
 
 
 /***/ },
-/* 210 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */'use strict';

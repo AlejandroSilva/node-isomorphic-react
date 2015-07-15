@@ -18,6 +18,7 @@ module.exports = React.createClass({
           </title>
           <link rel="stylesheet" href="/css/styles.css"/>
           <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+          <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         </head>
         <body>
           <Header {...this.props}></Header>
