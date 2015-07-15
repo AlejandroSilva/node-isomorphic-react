@@ -8,6 +8,8 @@ var SPA = require('./views/spa.jsx');
 var Section1 = require('./views/section1.jsx');
 var Section2 = require('./views/section2.jsx');
 var Section3 = require('./views/section3.jsx');
+var Section4 = require('./views/section4.jsx');
+
 //var NotFound = require('./views/errors/notFound.jsx');
 var NotFound2 = React.createClass({
     render: function render() {
@@ -25,6 +27,7 @@ var routes = module.exports = (
         <Route name='section1' handler={Section1} />
         <Route name='section2' handler={Section2} />
         <Route name='section3' handler={Section3} />
+        <Route name='section4' handler={Section4} />
 
         <Router.DefaultRoute handler={NotFound2} />
         <Router.NotFoundRoute handler={NotFound2} />

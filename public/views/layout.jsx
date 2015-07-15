@@ -19,6 +19,12 @@ module.exports = React.createClass({
           <link rel="stylesheet" href="/css/styles.css"/>
           <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
           <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+          {/* fixed-data-tables */}
+          <link rel="stylesheet" href="/css/fixed-data-tables/fixed-data-table.min.css"/>
+          <link rel="stylesheet" href="/css/fixed-data-tables/fixed-data-table-base.min.css"/>
+          <link rel="stylesheet" href="/css/fixed-data-tables/fixed-data-table-style.min.css"/>
+
         </head>
         <body>
           <Header {...this.props}></Header>
