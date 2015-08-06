@@ -9,6 +9,7 @@ var Section1 = require('./views/section1.jsx');
 var Section2 = require('./views/section2.jsx');
 var Section3 = require('./views/section3.jsx');
 var Section4 = require('./views/section4.jsx');
+var Section5 = require('./views/section5.jsx');
 
 //var NotFound = require('./views/errors/notFound.jsx');
 var NotFound2 = React.createClass({
@@ -28,6 +29,7 @@ var routes = module.exports = (
         <Route name='section2' handler={Section2} />
         <Route name='section3' handler={Section3} />
         <Route name='section4' handler={Section4} />
+        <Route name='section5' handler={Section5} />
 
         <Router.DefaultRoute handler={NotFound2} />
         <Router.NotFoundRoute handler={NotFound2} />

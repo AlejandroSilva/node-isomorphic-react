@@ -27,8 +27,12 @@ module.exports = React.createClass({
                     activeClassName={activeClass}>Section 3</Link>
             </li>
             <li className='left-nav-link' id='nav-section4'>
-              <Link to='section4' className={this.props.navSelection==='nav-section3'?activeClass:''}
+              <Link to='section4' className={this.props.navSelection==='nav-section4'?activeClass:''}
                     activeClassName={activeClass}>Section 4 - FixedDataTable</Link>
+            </li>
+            <li className='left-nav-link' id='nav-section5'>
+              <Link to='section5' className={this.props.navSelection==='nav-section5'?activeClass:''}
+                    activeClassName={activeClass}>Section 5 - Griddle</Link>
             </li>
           </ul>
         </nav>
